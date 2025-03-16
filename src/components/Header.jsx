@@ -82,19 +82,46 @@ const NavDropdown = ({ title, items }) => {
   );
 };
 
-// Language selector component
+// Language selector component with flag icons
 const LanguageSelector = () => {
   const { language, changeLanguage, availableLanguages } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useLanguage();
+  
+  // Flag SVGs
+  const flags = {
+    ka: (
+      <svg width="20" height="14" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="30" height="20" fill="white"/>
+        <path d="M0 0H30V20H0V0Z" fill="white"/>
+        <path d="M13 0H17V20H13V0Z" fill="#FF0000"/>
+        <path d="M0 8H30V12H0V8Z" fill="#FF0000"/>
+        <path d="M6.5 3.5L7 5L8.5 5.5L7 6L6.5 7.5L6 6L4.5 5.5L6 5L6.5 3.5Z" fill="#FF0000"/>
+        <path d="M23.5 3.5L24 5L25.5 5.5L24 6L23.5 7.5L23 6L21.5 5.5L23 5L23.5 3.5Z" fill="#FF0000"/>
+        <path d="M6.5 12.5L7 14L8.5 14.5L7 15L6.5 16.5L6 15L4.5 14.5L6 14L6.5 12.5Z" fill="#FF0000"/>
+        <path d="M23.5 12.5L24 14L25.5 14.5L24 15L23.5 16.5L23 15L21.5 14.5L23 14L23.5 12.5Z" fill="#FF0000"/>
+      </svg>
+    ),
+    en: (
+      <svg width="20" height="14" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="30" height="20" fill="#012169"/>
+        <path d="M0 0L30 20M30 0L0 20" stroke="white" strokeWidth="3"/>
+        <path d="M15 0V20M0 10H30" stroke="white" strokeWidth="5"/>
+        <path d="M15 0V20M0 10H30" stroke="#C8102E" strokeWidth="3"/>
+        <path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" strokeWidth="1"/>
+      </svg>
+    )
+  };
   
   return (
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1 text-susi-beige font-medium hover:text-susi-white"
+        aria-label={`Change language, current language: ${language}`}
       >
-        {t(`language.${language}`)}
+        <span className="flex items-center justify-center border border-susi-gray-600 rounded overflow-hidden w-6 h-4">
+          {flags[language]}
+        </span>
         <svg 
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
           fill="none" 
@@ -106,7 +133,7 @@ const LanguageSelector = () => {
       </button>
       
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-20 bg-susi-gray-800 rounded-md shadow-lg z-10 py-1">
+        <div className="absolute right-0 mt-2 bg-susi-gray-800 rounded-md shadow-lg z-10 py-1">
           {availableLanguages.map(lang => (
             <button
               key={lang}
@@ -114,9 +141,11 @@ const LanguageSelector = () => {
                 changeLanguage(lang);
                 setIsOpen(false);
               }}
-              className={`block w-full text-left px-4 py-2 text-sm ${language === lang ? 'bg-susi-gray-700 text-susi-white' : 'text-susi-beige hover:bg-susi-gray-700 hover:text-susi-white'}`}
+              className={`flex items-center gap-2 w-full px-4 py-2 text-sm ${language === lang ? 'bg-susi-gray-700 text-susi-white' : 'text-susi-beige hover:bg-susi-gray-700 hover:text-susi-white'}`}
             >
-              {t(`language.${lang}`)}
+              <span className="flex items-center justify-center border border-susi-gray-600 rounded overflow-hidden w-6 h-4">
+                {flags[lang]}
+              </span>
             </button>
           ))}
         </div>
@@ -187,11 +216,8 @@ export default function Header() {
           </nav>
         </div>
         
-        {/* User authentication section */}
+        {/* User authentication section - moved language selector to far right */}
         <nav className="flex gap-4 items-center">
-          {/* Language switcher */}
-          <LanguageSelector />
-          
           {isAdmin && (
             <Link to="/admin" className="text-susi-beige hover:text-susi-white">
               {t('nav.admin')}
@@ -232,6 +258,11 @@ export default function Header() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
           </button>
+          
+          {/* Language selector - positioned at the far right */}
+          <div className="ml-2">
+            <LanguageSelector />
+          </div>
         </nav>
       </div>
       

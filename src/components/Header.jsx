@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
+import logoImage from '../assets/images/logo.png';
 
 export default function Header() {
   const { currentUser, logout, isAdmin } = useAuth();
@@ -20,7 +21,13 @@ export default function Header() {
   return (
     <header className="bg-susi-white shadow-md">
       <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-susi-gray-700">My Blog</Link>
+        <Link to="/" className="flex items-center">
+          <img 
+            src={logoImage} 
+            alt="Susi Blog Logo" 
+            className="h-10" 
+          />
+        </Link>
         <nav className="flex gap-4 items-center">
           <Link to="/" className="text-susi-gray-500 hover:text-susi-black">Home</Link>
           

@@ -6,5 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     open: true
-  }
+  },
+  // Ensure assets are properly handled
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.svg', '**/*.gif'],
 })

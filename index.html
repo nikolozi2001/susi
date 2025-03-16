@@ -4,11 +4,19 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/fonts/fonts.css">
-    <link rel="preload" href="/fonts/DejaVuSansCondensed.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/DejaVuSansCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Use Google Fonts instead of local fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    
     <title>Susi Blog - React + Vite + Tailwind</title>
     <meta name="description" content="A blog site built with Vite, React and Tailwind CSS" />
+    
+    <style>
+      /* Map Roboto Condensed to DejaVuSansCondensed to avoid changing all CSS */
+      body {
+        font-family: 'Roboto Condensed', sans-serif;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

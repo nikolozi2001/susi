@@ -1,24 +1,71 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { posts } from '../data/posts';
+import { useEffect, useState } from 'react';
+import { getPostBySlug } from '../api';
 import ReactMarkdown from 'react-markdown';
+import { posts as localPosts } from '../data/posts';
 
 export default function BlogPost() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  
-  const post = posts.find(post => post.slug === slug);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   useEffect(() => {
-    if (!post) {
-      navigate('/not-found', { replace: true });
-    }
-  }, [post, navigate]);
+    const fetchPost = async () => {
+      try {
+        setLoading(true);
+        
+        // Use MongoDB API instead of Firebase
+        const fetchedPost = await getPostBySlug(slug);
+        
+        setPost({
+          id: fetchedPost._id,
+          title: fetchedPost.title,
+          slug: fetchedPost.slug,
+          excerpt: fetchedPost.excerpt,
+          content: fetchedPost.content,
+          image: fetchedPost.image,
+          date: new Date(fetchedPost.createdAt).toLocaleDateString(),
+          author: fetchedPost.author?.name || 'Unknown Author'
+        });
+      } catch (err) {
+        console.error('Error fetching post:', err);
+        
+        // Try to find post in local data as fallback
+        const localPost = localPosts.find(p => p.slug === slug);
+        if (localPost) {
+          setPost(localPost);
+          setError('Using local data: MongoDB connection may be down');
+        } else {
+          navigate('/not-found', { replace: true });
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPost();
+  }, [slug, navigate]);
+  
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-susi-gray-700"></div>
+      </div>
+    );
+  }
   
   if (!post) return null;
   
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {error && (
+        <div className="p-4 mb-4 text-yellow-700 bg-yellow-50 border border-yellow-300 rounded">
+          {error}
+        </div>
+      )}
+      
       {post.image && (
         <img 
           src={post.image} 

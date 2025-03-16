@@ -4,7 +4,7 @@
        url('./DejaVuSansCondensed.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: swap; /* Show text while font is loading */
 }
 
 @font-face {

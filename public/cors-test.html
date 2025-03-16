@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Test</title>
+    <script>
+        async function testCORS() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing API connection...';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/test', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `<div style="color: green">Success! Server response: ${JSON.stringify(data)}</div>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: red">Error: ${error.message}</div>`;
+                console.error('CORS Test Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>CORS Test Page</h1>
+    <p>This page tests if CORS is properly configured on your server</p>
+    <button onclick="testCORS()">Test CORS</button>
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+</body>
+</html>

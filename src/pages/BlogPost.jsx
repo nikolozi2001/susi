@@ -27,15 +27,15 @@ export default function BlogPost() {
         />
       )}
       
-      <p className="text-gray-500 mb-2">{post.date}</p>
-      <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
+      <p className="text-susi-gray-500 mb-2">{post.date}</p>
+      <h1 className="text-4xl font-bold mb-6 text-susi-black">{post.title}</h1>
       
       <div className="prose lg:prose-xl max-w-none">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
       
-      <div className="mt-10 pt-6 border-t border-gray-200">
-        <Link to="/" className="text-indigo-600 hover:text-indigo-800">
+      <div className="mt-10 pt-6 border-t border-susi-gray-300">
+        <Link to="/" className="text-susi-gray-700 hover:text-susi-black">
           ← Back to all posts
         </Link>
       </div>

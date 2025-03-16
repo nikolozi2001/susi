@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: 'DejaVuSansCondensed', system-ui, sans-serif;
+  }
+}
+
 body {
-  @apply bg-gray-50;
+  @apply bg-susi-lightbeige;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-susi-gray-700 text-susi-white rounded-lg hover:bg-susi-darkgray transition-colors;
+  }
+  
+  .text-link {
+    @apply text-susi-gray-600 hover:text-susi-black transition-colors;
+  }
 }

@@ -42,7 +42,12 @@ export default {
   
   // Blog post
   post: {
-    backToPosts: '← ყველა პოსტზე დაბრუნება'
+    backToPosts: '← ყველა პოსტზე დაბრუნება',
+    by: 'ავტორი',
+    publishedOn: 'გამოქვეყნებულია',
+    relatedPosts: 'მსგავსი პოსტები',
+    share: 'გაზიარება',
+    tags: 'ტეგები'
   },
   
   // Admin

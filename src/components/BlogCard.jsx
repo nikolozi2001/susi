@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function BlogCard({ post }) {
+  const { t } = useLanguage();
+  
   return (
     <div className="bg-susi-white rounded-lg shadow-md overflow-hidden">
       {post.image && (
@@ -18,7 +21,7 @@ export default function BlogCard({ post }) {
           to={`/post/${post.slug}`}
           className="text-susi-gray-700 font-medium hover:text-susi-black"
         >
-          Read More
+          {t('home.readMore')}
         </Link>
       </div>
     </div>

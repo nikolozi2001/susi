@@ -100,10 +100,20 @@ export const getPosts = async (filters = {}) => {
       params.append('search', filters.search);
     }
     
-    const response = await api.get(`/posts?${params}`);
+    console.log(`Sending request to: ${API_URL}/posts?${params}`);
+    const response = await api.get(`/posts?${params.toString()}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching posts:', error.message);
+    
+    // If we're using local data and have a search filter, filter it locally
+    if (filters.search) {
+      return localPosts.filter(post => 
+        post.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(filters.search.toLowerCase()) ||
+        post.content.toLowerCase().includes(filters.search.toLowerCase())
+      );
+    }
     return getFallbackPosts();
   }
 };

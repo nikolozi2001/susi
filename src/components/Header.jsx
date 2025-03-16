@@ -41,7 +41,7 @@ const NavDropdown = ({ title, items }) => {
       onMouseLeave={handleMouseLeave}
     >
       <button 
-        className="flex items-center gap-1 text-susi-gray-500 hover:text-susi-black"
+        className="flex items-center gap-1 text-susi-beige hover:text-susi-white"
         onClick={handleClick}
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -59,7 +59,7 @@ const NavDropdown = ({ title, items }) => {
       
       {isOpen && (
         <div 
-          className="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg z-10 py-1"
+          className="absolute left-0 mt-2 w-60 bg-susi-gray-800 rounded-md shadow-lg z-10 py-1"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           role="menu"
@@ -69,7 +69,7 @@ const NavDropdown = ({ title, items }) => {
             <Link
               key={index}
               to={item.path}
-              className="block px-4 py-2 text-sm text-susi-gray-600 hover:bg-susi-lightbeige hover:text-susi-black"
+              className="block px-4 py-2 text-sm text-susi-beige hover:bg-susi-gray-700 hover:text-susi-white"
               onClick={() => setIsOpen(false)}
               role="menuitem"
             >
@@ -92,7 +92,7 @@ const LanguageSelector = () => {
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 text-susi-gray-700 font-medium"
+        className="flex items-center gap-1 text-susi-beige font-medium hover:text-susi-white"
       >
         {t(`language.${language}`)}
         <svg 
@@ -106,7 +106,7 @@ const LanguageSelector = () => {
       </button>
       
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-20 bg-white rounded-md shadow-lg z-10 py-1">
+        <div className="absolute right-0 mt-2 w-20 bg-susi-gray-800 rounded-md shadow-lg z-10 py-1">
           {availableLanguages.map(lang => (
             <button
               key={lang}
@@ -114,7 +114,7 @@ const LanguageSelector = () => {
                 changeLanguage(lang);
                 setIsOpen(false);
               }}
-              className={`block w-full text-left px-4 py-2 text-sm ${language === lang ? 'bg-susi-lightbeige text-susi-black' : 'text-susi-gray-600 hover:bg-susi-lightbeige hover:text-susi-black'}`}
+              className={`block w-full text-left px-4 py-2 text-sm ${language === lang ? 'bg-susi-gray-700 text-susi-white' : 'text-susi-beige hover:bg-susi-gray-700 hover:text-susi-white'}`}
             >
               {t(`language.${lang}`)}
             </button>
@@ -166,7 +166,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-susi-white shadow-md">
+    <header className="bg-susi-darkgray shadow-md text-susi-white">
       {/* Top Bar */}
       <div className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center">
@@ -180,7 +180,7 @@ export default function Header() {
           
           {/* Main navigation with dropdowns */}
           <nav className="hidden md:flex gap-6 items-center z-30">
-            <Link to="/" className="text-susi-gray-500 hover:text-susi-black">{t('nav.home')}</Link>
+            <Link to="/" className="text-susi-beige hover:text-susi-white">{t('nav.home')}</Link>
             <NavDropdown title={t('nav.aboutUs')} items={aboutUsItems} />
             <NavDropdown title={t('nav.information')} items={informationItems} />
             <NavDropdown title={t('nav.news')} items={newsItems} />
@@ -193,30 +193,30 @@ export default function Header() {
           <LanguageSelector />
           
           {isAdmin && (
-            <Link to="/admin" className="text-susi-gray-500 hover:text-susi-black">
+            <Link to="/admin" className="text-susi-beige hover:text-susi-white">
               {t('nav.admin')}
             </Link>
           )}
           
           {currentUser ? (
             <>
-              <span className="text-susi-gray-500">
+              <span className="text-susi-beige">
                 {currentUser.email}
               </span>
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="text-susi-gray-500 hover:text-susi-black disabled:text-susi-gray-400"
+                className="text-susi-beige hover:text-susi-white disabled:text-susi-gray-400"
               >
                 {isLoggingOut ? t('auth.loggingOut') : t('nav.logout')}
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-susi-gray-500 hover:text-susi-black">
+              <Link to="/login" className="text-susi-beige hover:text-susi-white">
                 {t('nav.login')}
               </Link>
-              <Link to="/signup" className="px-4 py-2 bg-susi-gray-700 text-susi-white rounded hover:bg-susi-darkgray transition-colors">
+              <Link to="/signup" className="px-4 py-2 bg-susi-beige text-susi-black rounded hover:bg-susi-white transition-colors">
                 {t('nav.signup')}
               </Link>
             </>
@@ -224,7 +224,7 @@ export default function Header() {
           
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-susi-gray-600 hover:text-susi-black ml-4"
+            className="md:hidden text-susi-beige hover:text-susi-white ml-4"
             onClick={toggleMobileNav}
             aria-expanded={isMobileNavOpen}
           >
@@ -236,16 +236,16 @@ export default function Header() {
       </div>
       
       {/* Mobile navigation - alternative approach using toggleable menu */}
-      <div className={`md:hidden border-t border-susi-gray-200 ${isMobileNavOpen ? 'block' : 'hidden'}`}>
+      <div className={`md:hidden border-t border-susi-gray-700 ${isMobileNavOpen ? 'block' : 'hidden'}`}>
         <div className="container mx-auto px-4 py-2">
           <nav className="flex flex-col">
-            <Link to="/" className="py-2 text-susi-gray-500 hover:text-susi-black" onClick={() => setIsMobileNavOpen(false)}>
+            <Link to="/" className="py-2 text-susi-beige hover:text-susi-white" onClick={() => setIsMobileNavOpen(false)}>
               {t('nav.home')}
             </Link>
             
             {/* About Us section */}
             <details className="group py-1">
-              <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
+              <summary className="text-susi-beige hover:text-susi-white cursor-pointer flex items-center justify-between py-1">
                 {t('nav.aboutUs')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -256,7 +256,7 @@ export default function Header() {
                   <Link 
                     key={index} 
                     to={item.path} 
-                    className="block py-1 text-sm text-susi-gray-600 hover:text-susi-black"
+                    className="block py-1 text-sm text-susi-beige hover:text-susi-white"
                     onClick={() => setIsMobileNavOpen(false)}
                   >
                     {item.label}
@@ -267,7 +267,7 @@ export default function Header() {
             
             {/* Information section */}
             <details className="group py-1">
-              <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
+              <summary className="text-susi-beige hover:text-susi-white cursor-pointer flex items-center justify-between py-1">
                 {t('nav.information')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -278,7 +278,7 @@ export default function Header() {
                   <Link 
                     key={index} 
                     to={item.path} 
-                    className="block py-1 text-sm text-susi-gray-600 hover:text-susi-black"
+                    className="block py-1 text-sm text-susi-beige hover:text-susi-white"
                     onClick={() => setIsMobileNavOpen(false)}
                   >
                     {item.label}
@@ -289,7 +289,7 @@ export default function Header() {
             
             {/* News section */}
             <details className="group py-1">
-              <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
+              <summary className="text-susi-beige hover:text-susi-white cursor-pointer flex items-center justify-between py-1">
                 {t('nav.news')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -300,7 +300,7 @@ export default function Header() {
                   <Link 
                     key={index} 
                     to={item.path} 
-                    className="block py-1 text-sm text-susi-gray-600 hover:text-susi-black"
+                    className="block py-1 text-sm text-susi-beige hover:text-susi-white"
                     onClick={() => setIsMobileNavOpen(false)}
                   >
                     {item.label}

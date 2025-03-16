@@ -42,7 +42,12 @@ export default {
   
   // Blog post
   post: {
-    backToPosts: '← Back to all posts'
+    backToPosts: '← Back to all posts',
+    by: 'Author',
+    publishedOn: 'Published on',
+    relatedPosts: 'Related Posts',
+    share: 'Share',
+    tags: 'Tags'
   },
   
   // Admin

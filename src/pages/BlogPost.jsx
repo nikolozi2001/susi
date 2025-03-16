@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getPostBySlug } from '../api';
 import ReactMarkdown from 'react-markdown';
 import { posts as localPosts } from '../data/posts';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -10,6 +11,7 @@ export default function BlogPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useLanguage();
   
   useEffect(() => {
     const fetchPost = async () => {
@@ -36,7 +38,7 @@ export default function BlogPost() {
         const localPost = localPosts.find(p => p.slug === slug);
         if (localPost) {
           setPost(localPost);
-          setError('Using local data: MongoDB connection may be down');
+          setError(t('errors.connectionError'));
         } else {
           navigate('/not-found', { replace: true });
         }
@@ -46,7 +48,7 @@ export default function BlogPost() {
     };
     
     fetchPost();
-  }, [slug, navigate]);
+  }, [slug, navigate, t]);
   
   if (loading) {
     return (
@@ -77,13 +79,19 @@ export default function BlogPost() {
       <p className="text-susi-gray-500 mb-2">{post.date}</p>
       <h1 className="text-4xl font-bold mb-6 text-susi-black">{post.title}</h1>
       
+      {post.author && (
+        <p className="text-susi-gray-600 mb-6">
+          <span className="font-medium">{t('post.by')}:</span> {post.author}
+        </p>
+      )}
+      
       <div className="prose lg:prose-xl max-w-none">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
       
       <div className="mt-10 pt-6 border-t border-susi-gray-300">
         <Link to="/" className="text-susi-gray-700 hover:text-susi-black">
-          ← Back to all posts
+          {t('post.backToPosts')}
         </Link>
       </div>
     </div>

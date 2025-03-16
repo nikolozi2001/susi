@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { useState, useRef, useEffect } from 'react';
 import logoImage from '../assets/images/logo.png';
 
@@ -81,27 +82,71 @@ const NavDropdown = ({ title, items }) => {
   );
 };
 
+// Language selector component
+const LanguageSelector = () => {
+  const { language, changeLanguage, availableLanguages } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+  
+  return (
+    <div className="relative">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1 text-susi-gray-700 font-medium"
+      >
+        {t(`language.${language}`)}
+        <svg 
+          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-20 bg-white rounded-md shadow-lg z-10 py-1">
+          {availableLanguages.map(lang => (
+            <button
+              key={lang}
+              onClick={() => {
+                changeLanguage(lang);
+                setIsOpen(false);
+              }}
+              className={`block w-full text-left px-4 py-2 text-sm ${language === lang ? 'bg-susi-lightbeige text-susi-black' : 'text-susi-gray-600 hover:bg-susi-lightbeige hover:text-susi-black'}`}
+            >
+              {t(`language.${lang}`)}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Header() {
   const { currentUser, logout, isAdmin } = useAuth();
+  const { t } = useLanguage();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
-  // Define navigation dropdown items
+  // Define navigation dropdown items with translated labels
   const aboutUsItems = [
-    { label: "Information", path: "/about/information" },
-    { label: "Head and Deputies", path: "/about/head-deputies" }
+    { label: t('aboutUs.information'), path: "/about/information" },
+    { label: t('aboutUs.headAndDeputies'), path: "/about/head-deputies" }
   ];
   
   const informationItems = [
-    { label: "Standard Acts", path: "/info/standard-acts" },
-    { label: "International Cooperation", path: "/info/international-cooperation" },
-    { label: "Reports", path: "/info/reports" }
+    { label: t('information.standardActs'), path: "/info/standard-acts" },
+    { label: t('information.internationalCooperation'), path: "/info/international-cooperation" },
+    { label: t('information.reports'), path: "/info/reports" }
   ];
   
   const newsItems = [
-    { label: "News", path: "/news" },
-    { label: "Photo Gallery", path: "/news/photo-gallery" },
-    { label: "Video Gallery", path: "/news/video-gallery" }
+    { label: t('news.allNews'), path: "/news" },
+    { label: t('news.photoGallery'), path: "/news/photo-gallery" },
+    { label: t('news.videoGallery'), path: "/news/video-gallery" }
   ];
 
   const handleLogout = async () => {
@@ -135,18 +180,21 @@ export default function Header() {
           
           {/* Main navigation with dropdowns */}
           <nav className="hidden md:flex gap-6 items-center z-30">
-            <Link to="/" className="text-susi-gray-500 hover:text-susi-black">Home</Link>
-            <NavDropdown title="About Us" items={aboutUsItems} />
-            <NavDropdown title="Information" items={informationItems} />
-            <NavDropdown title="News" items={newsItems} />
+            <Link to="/" className="text-susi-gray-500 hover:text-susi-black">{t('nav.home')}</Link>
+            <NavDropdown title={t('nav.aboutUs')} items={aboutUsItems} />
+            <NavDropdown title={t('nav.information')} items={informationItems} />
+            <NavDropdown title={t('nav.news')} items={newsItems} />
           </nav>
         </div>
         
         {/* User authentication section */}
         <nav className="flex gap-4 items-center">
+          {/* Language switcher */}
+          <LanguageSelector />
+          
           {isAdmin && (
             <Link to="/admin" className="text-susi-gray-500 hover:text-susi-black">
-              Admin
+              {t('nav.admin')}
             </Link>
           )}
           
@@ -160,16 +208,16 @@ export default function Header() {
                 disabled={isLoggingOut}
                 className="text-susi-gray-500 hover:text-susi-black disabled:text-susi-gray-400"
               >
-                {isLoggingOut ? 'Logging out...' : 'Logout'}
+                {isLoggingOut ? t('auth.loggingOut') : t('nav.logout')}
               </button>
             </>
           ) : (
             <>
               <Link to="/login" className="text-susi-gray-500 hover:text-susi-black">
-                Login
+                {t('nav.login')}
               </Link>
               <Link to="/signup" className="px-4 py-2 bg-susi-gray-700 text-susi-white rounded hover:bg-susi-darkgray transition-colors">
-                Sign Up
+                {t('nav.signup')}
               </Link>
             </>
           )}
@@ -192,13 +240,13 @@ export default function Header() {
         <div className="container mx-auto px-4 py-2">
           <nav className="flex flex-col">
             <Link to="/" className="py-2 text-susi-gray-500 hover:text-susi-black" onClick={() => setIsMobileNavOpen(false)}>
-              Home
+              {t('nav.home')}
             </Link>
             
             {/* About Us section */}
             <details className="group py-1">
               <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
-                About Us
+                {t('nav.aboutUs')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -220,7 +268,7 @@ export default function Header() {
             {/* Information section */}
             <details className="group py-1">
               <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
-                Information
+                {t('nav.information')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -242,7 +290,7 @@ export default function Header() {
             {/* News section */}
             <details className="group py-1">
               <summary className="text-susi-gray-500 hover:text-susi-black cursor-pointer flex items-center justify-between py-1">
-                News
+                {t('nav.news')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>

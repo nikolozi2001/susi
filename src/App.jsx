@@ -14,6 +14,7 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 // Admin components
 import Dashboard from './pages/admin/Dashboard';
@@ -73,17 +74,19 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider 
-        router={router}
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-          v7_normalizeFormMethod: true,
-          v7_prependBasename: true
-        }}
-      />
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <RouterProvider 
+          router={router}
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+            v7_normalizeFormMethod: true,
+            v7_prependBasename: true
+          }}
+        />
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

@@ -7,6 +7,7 @@ import fs from 'fs';
 import connectDB from './server/config/db.js';
 import authRoutes from './server/routes/authRoutes.js';
 import postRoutes from './server/routes/postRoutes.js';
+import uploadRoutes from './server/routes/uploadRoutes.js';
 
 // Load environment variables
 dotenv.config({ path: './server/.env' });
@@ -55,20 +56,31 @@ app.get('/api/test', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/uploads', uploadRoutes);
 
 // Handle uploads directory for images
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create uploads directory if it doesn't exist
+// Create directories if they don't exist
 const uploadsDir = path.join(__dirname, '/uploads');
-if (!fs.existsSync(uploadsDir)){
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
+const assetsDir = path.join(__dirname, '/public/assets');
+const imagesDir = path.join(assetsDir, '/images');
+const blogImagesDir = path.join(imagesDir, '/blog');
+const avatarsDir = path.join(imagesDir, '/avatars');
+const uiImagesDir = path.join(imagesDir, '/ui');
 
+// Create directories if they don't exist
+[uploadsDir, assetsDir, imagesDir, blogImagesDir, avatarsDir, uiImagesDir].forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+    console.log(`Created directory: ${dir}`);
+  }
+});
+
+// Serve static files
 app.use('/uploads', express.static(uploadsDir));
-
-// Serve static files from public directory
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve static assets in production

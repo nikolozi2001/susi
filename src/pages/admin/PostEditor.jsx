@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPostById, createPost, updatePost } from '../../api';
+import api from '../../api'; // Import the API client
 import { useAuth } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
@@ -53,7 +54,6 @@ export default function PostEditor() {
       if (isEditMode) {
         try {
           setLoading(true);
-          // Use MongoDB API instead of Firebase
           const postData = await getPostById(postId);
           
           reset({
@@ -79,7 +79,7 @@ export default function PostEditor() {
     fetchPost();
   }, [isEditMode, postId, navigate, reset]);
 
-  // Handle image upload logic
+  // Handle image upload using the API client
   const uploadImage = async (file) => {
     if (!file) return null;
     
@@ -87,18 +87,14 @@ export default function PostEditor() {
       const formData = new FormData();
       formData.append('image', file);
       
-      // This assumes you have an image upload endpoint
-      // You'll need to implement this on your server
-      const response = await fetch('/api/uploads', {
-        method: 'POST',
-        body: formData,
+      // Use the API client which has the correct base URL
+      const response = await api.post('/uploads?type=blog', formData, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          'Content-Type': 'multipart/form-data',
         }
       });
       
-      const data = await response.json();
-      return data.imageUrl; // Return the URL from your server
+      return response.data.imageUrl;
     } catch (error) {
       console.error('Error uploading image:', error);
       throw new Error('Failed to upload image');
@@ -125,10 +121,8 @@ export default function PostEditor() {
       };
       
       if (isEditMode) {
-        // Update existing post with MongoDB API
         await updatePost(postId, postData);
       } else {
-        // Create new post with MongoDB API
         await createPost(postData);
       }
       

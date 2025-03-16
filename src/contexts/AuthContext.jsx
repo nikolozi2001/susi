@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register new user
-  const signup = async (email, password, name) => {
-    const userData = await apiRegister(name, email, password);
+  const signup = async (email, password, name, role = 'user') => {
+    const userData = await apiRegister(name, email, password, role);
     localStorage.setItem('authToken', userData.token);
     setCurrentUser(userData);
     return userData;

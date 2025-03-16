@@ -22,7 +22,8 @@ export default function Signup() {
     try {
       setError('');
       setLoading(true);
-      await signup(data.email, data.password, data.name);
+      // Include role in signup function
+      await signup(data.email, data.password, data.name, data.role);
       navigate('/');
     } catch (err) {
       setError('Failed to create an account: ' + err.message);
@@ -119,6 +120,12 @@ export default function Signup() {
           )}
         </div>
         
+        <input 
+          type="hidden" 
+          {...register('role')} 
+          value="user" // Default role
+        />
+
         <button
           type="submit"
           disabled={loading}

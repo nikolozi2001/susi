@@ -18,6 +18,8 @@ import Links from './pages/Links';
 import StandardActs from './pages/info/StandardActs';
 import InternationalCooperation from './pages/info/InternationalCooperation';
 import Reports from './pages/info/Reports';
+import Information from './pages/about/Information';
+import HeadDeputies from './pages/about/HeadDeputies';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -65,6 +67,8 @@ const router = createBrowserRouter(
         { path: "info/standard-acts", element: <StandardActs /> },
         { path: "info/international-cooperation", element: <InternationalCooperation /> },
         { path: "info/reports", element: <Reports /> },
+        { path: "about/information", element: <Information /> },
+        { path: "about/head-deputies", element: <HeadDeputies /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

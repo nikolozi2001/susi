@@ -12,8 +12,10 @@ import NotFound from './pages/NotFound';
 import ReportThreat from './pages/ReportThreat';
 import PhotoGallery from './pages/news/PhotoGallery';
 import VideoGallery from './pages/news/VideoGallery';
+import News from './pages/news/News';
 import Contact from './pages/Contact';
 import Links from './pages/Links';
+import StandardActs from './pages/info/StandardActs';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -53,10 +55,12 @@ const router = createBrowserRouter(
         { path: "login", element: <Login /> },
         { path: "signup", element: <Signup /> },
         { path: "report-threat", element: <ReportThreat /> },
+        { path: "news", element: <News /> },
         { path: "news/photo-gallery", element: <PhotoGallery /> },
         { path: "news/video-gallery", element: <VideoGallery /> },
         { path: "contact", element: <Contact /> },
         { path: "links", element: <Links /> },
+        { path: "info/standard-acts", element: <StandardActs /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

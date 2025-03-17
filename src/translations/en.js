@@ -264,6 +264,41 @@ export default {
     osce: 'Organization for Security and Cooperation in Europe (OSCE)'
   },
   
+  // Standard Acts page
+  standardActs: {
+    title: 'Standard Acts',
+    statutes: 'Statutes',
+    law: 'Law',
+    order: 'Order',
+    resolution: 'Resolution',
+    govResolution: 'Government Resolution',
+    view: 'View',
+    download: 'Download',
+    disclaimer: 'Note: To view the full text of the normative acts, please click the "View" button.',
+    
+    // General documents
+    ethics_code: 'Order on Approval of the Code of Ethics for Employees of the State Security Service of Georgia',
+    social_security: 'Government Resolution on Approval of the Rules for Social Protection and Material Support of Employees of the State Security Service of Georgia',
+    special_equipment: 'Order on the Rules for Storage, Carrying and Use of Special Equipment in the Armament of the State Security Service of Georgia',
+    service_rules: 'Order on Approval of the Rules of Service in the State Security Service of Georgia',
+    salary_regulations: 'Resolution on Determining the Procedure for Salaries (Position and Rank) and Salary Bonuses in the State Security Service of Georgia',
+    sss_statute: 'Government Resolution on the Statute of the State Security Service',
+    oath: 'Order on Approval of the Oath of the State Security Service Employee',
+    
+    // Department statutes
+    admin_dept: 'On Approval of the Statute of the Administration (Department) of the State Security Service of Georgia',
+    anticorruption_dept: 'On Approval of the Statute of the Anti-Corruption Agency (Department) of the State Security Service of Georgia',
+    gen_inspection_dept: 'On Approval of the Statute of the General Inspection (Department) of the State Security Service of Georgia',
+    economic_dept: 'On Approval of the Statute of the Economic Department of the State Security Service of Georgia',
+    personnel_dept: 'On Approval of the Statute of the Main Directorate of Personnel of the State Security Service of Georgia',
+    protection_dept: 'On Approval of the Statute of the Main Directorate for Protection of Objects of the State Security Service of Georgia',
+    temp_detention_dept: 'On Approval of the Statute of the Temporary Detention Administration of the State Security Service of Georgia',
+    legal_dept: 'On Approval of the Statute of the Main Legal Directorate of the State Security Service of Georgia',
+    
+    // Law
+    sss_law: 'Law on State Security Service'
+  },
+  
   // Landing page
   landing: {
     heroTitle: 'State Security Service of Georgia',
@@ -283,5 +318,20 @@ export default {
     missionTitle: 'Our Mission',
     missionStatement: 'The State Security Service is dedicated to protecting Georgia\'s national interests, constitutional order, and territorial integrity. We work tirelessly to ensure the safety of our citizens through intelligence, counterterrorism operations, and security measures.',
     learnMore: 'Learn More About Us'
+  },
+  
+  // News page
+  news: {
+    allNews: 'News',
+    photoGallery: 'Photo Gallery',
+    videoGallery: 'Video Gallery',
+    searchNews: 'Search news...',
+    noNewsFound: 'No news articles found matching your search criteria.',
+    readMore: 'Read More',
+    sortBy: 'Sort by',
+    newest: 'Newest first',
+    oldest: 'Oldest first',
+    relatedNews: 'Related News',
+    share: 'Share'
   }
 };

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getPosts, deletePost } from '../../api';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function Dashboard() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t, language } = useLanguage();
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -41,16 +43,21 @@ export default function Dashboard() {
   }, []);
 
   const handleDelete = async (postId) => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
+    if (window.confirm(t('admin.confirmDelete'))) {
       try {
         // Use MongoDB API instead of Firebase
         await deletePost(postId);
         setPosts(posts.filter(post => post.id !== postId));
       } catch (err) {
         console.error('Error deleting post:', err);
-        setError('Failed to delete post. Please try again later.');
+        setError(t('admin.deleteError'));
       }
     }
+  };
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(language === 'ka' ? 'ka-GE' : 'en-US', options);
   };
 
   if (loading) {
@@ -64,12 +71,14 @@ export default function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-susi-black">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold text-susi-black">
+          {t('admin.dashboard')}
+        </h1>
         <Link 
           to="/admin/posts/new" 
           className="px-4 py-2 bg-susi-gray-700 text-susi-white rounded hover:bg-susi-darkgray transition-colors"
         >
-          New Post
+          {t('admin.newPost')}
         </Link>
       </div>
 
@@ -80,60 +89,71 @@ export default function Dashboard() {
       )}
 
       <div className="bg-susi-white rounded-lg shadow overflow-hidden">
-        <table className="min-w-full divide-y divide-susi-gray-300">
-          <thead className="bg-susi-lightbeige">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-bold text-susi-gray-600 uppercase tracking-wider">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-bold text-susi-gray-600 uppercase tracking-wider">Date</th>
-              <th className="px-6 py-3 text-left text-xs font-bold text-susi-gray-600 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-3 text-right text-xs font-bold text-susi-gray-600 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-susi-gray-300">
-            {posts.map(post => (
-              <tr key={post.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-susi-gray-700">{post.title}</div>
-                  <div className="text-sm text-susi-gray-500 truncate max-w-xs">{post.excerpt}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-susi-gray-500">
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    post.published 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {post.published ? 'Published' : 'Draft'}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Link 
-                    to={`/admin/posts/edit/${post.id}`}
-                    className="text-susi-gray-600 hover:text-susi-black mr-4"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(post.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            
-            {posts.length === 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-susi-gray-700 text-white">
               <tr>
-                <td colSpan="4" className="px-6 py-4 text-center text-sm text-susi-gray-500">
-                  No posts found. Create your first post!
-                </td>
+                <th className="py-3 px-4 text-left">
+                  {t('admin.title')}
+                </th>
+                <th className="py-3 px-4 text-left whitespace-nowrap w-32">
+                  {t('post.publishedOn')}
+                </th>
+                <th className="py-3 px-4 text-left whitespace-nowrap w-28">
+                  {t('admin.status')}
+                </th>
+                <th className="py-3 px-4 text-right whitespace-nowrap w-28">
+                  {t('admin.actions')}
+                </th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-susi-gray-200">
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <tr key={post._id || post.id} className="hover:bg-susi-gray-50">
+                    <td className="py-3 px-4">
+                      <div className="max-w-xs sm:max-w-sm md:max-w-md truncate" title={post.title}>
+                        {post.title}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      {formatDate(post.createdAt || post.date)}
+                    </td>
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        post.published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {post.published ? t('admin.published') : t('admin.draft')}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <div className="flex justify-end space-x-2">
+                        <Link
+                          to={`/admin/posts/edit/${post._id || post.id}`}
+                          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                        >
+                          {t('admin.edit')}
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(post._id || post.id)}
+                          className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
+                        >
+                          {t('admin.delete')}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="px-6 py-4 text-center text-sm text-susi-gray-500">
+                    {t('admin.noPostsFound')}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

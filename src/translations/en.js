@@ -65,6 +65,8 @@ export default {
     published: "Published",
     draft: "Draft",
     noPostsFound: "No posts found. Create your first post!",
+    confirmDelete: "Are you sure you want to delete this post?",
+    deleteError: "Error deleting post. Please try again.",
   },
 
   // Post Editor

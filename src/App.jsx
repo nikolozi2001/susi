@@ -16,6 +16,8 @@ import News from './pages/news/News';
 import Contact from './pages/Contact';
 import Links from './pages/Links';
 import StandardActs from './pages/info/StandardActs';
+import InternationalCooperation from './pages/info/InternationalCooperation';
+import Reports from './pages/info/Reports';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -61,6 +63,8 @@ const router = createBrowserRouter(
         { path: "contact", element: <Contact /> },
         { path: "links", element: <Links /> },
         { path: "info/standard-acts", element: <StandardActs /> },
+        { path: "info/international-cooperation", element: <InternationalCooperation /> },
+        { path: "info/reports", element: <Reports /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

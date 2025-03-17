@@ -8,7 +8,9 @@ export default {
     login: 'Login',
     signup: 'Sign Up',
     logout: 'Logout',
-    admin: 'Admin'
+    admin: 'Admin',
+    links: 'Links',
+    contactUs: 'Contact Us'
   },
   
   // About Us dropdown
@@ -127,5 +129,73 @@ export default {
   language: {
     ka: 'GEO',
     en: 'ENG'
+  },
+  
+  // Hotline section
+  hotline: {
+    title: 'HOT LINE',
+    reportThreats: 'REPORT THREATS'
+  },
+  
+  // ReportThreat page
+  reportThreat: {
+    title: 'Report a Threat',
+    introduction: 'Use this form to report suspicious activities, security incidents, or any threats. Your information will be kept confidential.',
+    securityMessage: 'If you know something about a threat to national security of Georgia, we want to hear from you.\n\nYou can send us information through the online contact form or through our hotline – 123.\n\nWe will treat your information and any personal details in confidence.',
+    threatType: 'Type of Threat *',
+    threatTypeSelect: 'Select a threat type',
+    suspiciousActivity: 'Suspicious Activity',
+    cybercrime: 'Cybercrime',
+    terrorism: 'Terrorism',
+    violence: 'Violence',
+    other: 'Other',
+    description: 'Description of the Threat *',
+    descriptionPlaceholder: 'Please provide as much detail as possible',
+    location: 'Location',
+    locationPlaceholder: 'City, Country or Online',
+    dateTime: 'Date/Time of Incident',
+    contactInfo: 'Your Contact Information (optional)',
+    contactInfoPlaceholder: 'Email or Phone Number',
+    contactInfoHelp: 'Providing contact information helps us follow up if needed, but it\'s not required.',
+    anonymous: 'Keep my report anonymous',
+    submit: 'Submit Report',
+    submitting: 'Submitting...',
+    thankYou: 'Thank You',
+    submissionSuccess: 'Your report has been submitted. Our team will review it promptly.',
+    submitAnother: 'Submit Another Report',
+    emergencyContact: 'Emergency Contact',
+    emergencyInstructions: 'For immediate assistance in case of emergency, please call our hotline:',
+    selectTypeError: 'Please select a threat type',
+    descriptionRequired: 'Description is required',
+    minDescription: 'Please provide at least 20 characters'
+  },
+  
+  // Media uploads
+  upload: {
+    selectMedia: 'Select media to upload',
+    selectImage: 'Select image to upload',
+    selectVideo: 'Select video to upload',
+    uploading: 'uploading...',
+    genericError: 'Error uploading file. Please try again.',
+    fileTooLarge: 'File is too large. Maximum size is {{size}}MB.',
+    addMedia: 'Add Media',
+    addImage: 'Add Image',
+    addVideo: 'Add Video',
+    dragDrop: 'Drag and drop files here, or click to select',
+    uploadedSuccessfully: 'Uploaded successfully',
+    onlyImagesAllowed: 'Only image files are allowed',
+    onlyVideosAllowed: 'Only video files are allowed',
+    maxFileSize: 'Max file size: {{size}}MB'
+  },
+  
+  gallery: {
+    uploadNewPhoto: 'Upload New Photo',
+    uploadNewVideo: 'Upload New Video',
+    confirmDelete: 'Are you sure you want to delete this item?',
+    deleteError: 'Error deleting item. Please try again.',
+    loadingError: 'Error loading gallery items. Please try again later.',
+    emptyGallery: 'No items in gallery yet',
+    photoDetails: 'Photo Details',
+    videoDetails: 'Video Details'
   }
 };

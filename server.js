@@ -42,7 +42,7 @@ try {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request logging for debugging
+// More detailed request logging for debugging
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
@@ -53,10 +53,34 @@ app.get('/api/test', (req, res) => {
   res.json({ success: true, message: 'API is working!' });
 });
 
+// List all registered routes for debugging
+const listRoutes = () => {
+  console.log('Registered API Routes:');
+  app._router.stack
+    .filter(r => r.route)
+    .forEach(r => {
+      const methods = Object.keys(r.route.methods).join(',');
+      console.log(`${methods.toUpperCase()} ${r.route.path}`);
+    });
+  
+  // Log Express router stack - shows middleware registrations
+  console.log('Express Router Stack:');
+  app._router.stack
+    .filter(r => r.name === 'router')
+    .forEach(r => {
+      console.log(`Router: ${r.regexp}`);
+    });
+};
+
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/uploads', uploadRoutes);
+
+// Run the route listing function after routes are registered
+if (process.env.NODE_ENV !== 'production') {
+  listRoutes();
+}
 
 // Handle uploads directory for images
 const __filename = fileURLToPath(import.meta.url);
@@ -66,17 +90,20 @@ const __dirname = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, '/uploads');
 const assetsDir = path.join(__dirname, '/public/assets');
 const imagesDir = path.join(assetsDir, '/images');
+const videosDir = path.join(assetsDir, '/videos');
 const blogImagesDir = path.join(imagesDir, '/blog');
 const avatarsDir = path.join(imagesDir, '/avatars');
+const threatsDir = path.join(imagesDir, '/threats');
 const uiImagesDir = path.join(imagesDir, '/ui');
 
 // Create directories if they don't exist
-[uploadsDir, assetsDir, imagesDir, blogImagesDir, avatarsDir, uiImagesDir].forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-    console.log(`Created directory: ${dir}`);
-  }
-});
+[uploadsDir, assetsDir, imagesDir, videosDir, blogImagesDir, avatarsDir, threatsDir, uiImagesDir]
+  .forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log(`Created directory: ${dir}`);
+    }
+  });
 
 // Serve static files
 app.use('/uploads', express.static(uploadsDir));

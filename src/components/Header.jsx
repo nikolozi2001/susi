@@ -196,6 +196,21 @@ export default function Header() {
 
   return (
     <header className="bg-susi-darkgray shadow-md text-susi-white">
+      {/* Hotline Bar */}
+      <div className="bg-red-700 text-white py-2">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <span className="font-bold mr-2">{t('hotline.title')}:</span>
+            <a href="tel:123" className="text-xl font-bold hover:underline">123</a>
+          </div>
+          <div className="uppercase font-bold tracking-wider">
+            <Link to="/report-threat" className="hover:underline">
+              {t('hotline.reportThreats')}
+            </Link>
+          </div>
+        </div>
+      </div>
+      
       {/* Top Bar */}
       <div className="container mx-auto px-4 py-6 flex items-center justify-between">
         <div className="flex items-center">
@@ -213,6 +228,8 @@ export default function Header() {
             <NavDropdown title={t('nav.aboutUs')} items={aboutUsItems} />
             <NavDropdown title={t('nav.information')} items={informationItems} />
             <NavDropdown title={t('nav.news')} items={newsItems} />
+            <Link to="/links" className="text-susi-beige hover:text-susi-white">{t('nav.links')}</Link>
+            <Link to="/contact" className="text-susi-beige hover:text-susi-white">{t('nav.contactUs')}</Link>
           </nav>
         </div>
         
@@ -339,6 +356,14 @@ export default function Header() {
                 ))}
               </div>
             </details>
+            
+            {/* Add Links and Contact Us to mobile menu */}
+            <Link to="/links" className="py-2 text-susi-beige hover:text-susi-white" onClick={() => setIsMobileNavOpen(false)}>
+              {t('nav.links')}
+            </Link>
+            <Link to="/contact" className="py-2 text-susi-beige hover:text-susi-white" onClick={() => setIsMobileNavOpen(false)}>
+              {t('nav.contactUs')}
+            </Link>
           </nav>
         </div>
       </div>

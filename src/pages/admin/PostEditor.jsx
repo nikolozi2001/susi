@@ -5,6 +5,7 @@ import api from '../../api'; // Import the API client
 import { useAuth } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
+import MediaUpload from '../../components/MediaUpload';
 
 export default function PostEditor() {
   const { postId } = useParams();
@@ -15,6 +16,7 @@ export default function PostEditor() {
   const [showPreview, setShowPreview] = useState(false);
   const [error, setError] = useState(null);
   const isEditMode = !!postId;
+  const [uploadedMedia, setUploadedMedia] = useState([]);
   
   const { 
     register, 
@@ -146,6 +148,26 @@ export default function PostEditor() {
     }
   };
 
+  const handleImageUploadComplete = (result) => {
+    // For featured image, just set the image preview
+    setImagePreview(result.mediaUrl);
+    setValue('imageUrl', result.mediaUrl);
+  };
+  
+  // Handle media upload completion (for content images/videos)
+  const handleContentMediaUploadComplete = (result) => {
+    // Add media to the collection
+    setUploadedMedia([...uploadedMedia, result]);
+    
+    // Insert markdown for the media into the content
+    const mediaMarkdown = result.mediaType === 'video' 
+      ? `<video controls src="${result.mediaUrl}" style="max-width: 100%;"></video>\n\n`
+      : `![](${result.mediaUrl})\n\n`;
+    
+    const currentContent = watch('content') || '';
+    setValue('content', currentContent + mediaMarkdown);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex justify-between items-center mb-6">
@@ -224,6 +246,17 @@ export default function PostEditor() {
               <label htmlFor="content" className="block text-susi-gray-600 mb-1">
                 Content * (Markdown supported)
               </label>
+              
+              {/* Media upload for content */}
+              <div className="mb-2">
+                <MediaUpload
+                  onUploadComplete={handleContentMediaUploadComplete}
+                  mediaType="all"
+                  maxSize={50}
+                  label="Add Media"
+                />
+              </div>
+              
               <textarea
                 id="content"
                 rows="12"
@@ -234,18 +267,49 @@ export default function PostEditor() {
               {errors.content && (
                 <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
               )}
+              
+              {/* Display uploaded media for reference */}
+              {uploadedMedia.length > 0 && (
+                <div className="mt-2">
+                  <p className="text-sm text-susi-gray-500 mb-2">Uploaded Media:</p>
+                  <div className="grid grid-cols-4 gap-2">
+                    {uploadedMedia.map((media, index) => (
+                      <div key={index} className="relative">
+                        {media.mediaType === 'video' ? (
+                          <video 
+                            src={media.mediaUrl} 
+                            className="w-full h-16 object-cover rounded border border-susi-gray-300" 
+                          />
+                        ) : (
+                          <img 
+                            src={media.mediaUrl} 
+                            alt={`Upload ${index + 1}`} 
+                            className="w-full h-16 object-cover rounded border border-susi-gray-300" 
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             
             <div>
               <label className="block text-susi-gray-600 mb-1">
                 Featured Image
               </label>
-              <input
-                type="file"
-                accept="image/*"
-                className="w-full p-2 border border-susi-gray-300 rounded"
-                {...register('image')}
-                onChange={handleImageChange}
+              
+              <MediaUpload
+                onUploadComplete={handleImageUploadComplete}
+                mediaType="image"
+                maxSize={5}
+                label="Select Image"
+              />
+              
+              {/* Hidden input to store the image URL */}
+              <input 
+                type="hidden" 
+                {...register('imageUrl')} 
               />
               
               {imagePreview && (

@@ -8,6 +8,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
+import ReportThreat from './pages/ReportThreat';
+import PhotoGallery from './pages/news/PhotoGallery';
+import VideoGallery from './pages/news/VideoGallery';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -45,6 +48,9 @@ const router = createBrowserRouter(
         { path: "post/:slug", element: <BlogPost /> },
         { path: "login", element: <Login /> },
         { path: "signup", element: <Signup /> },
+        { path: "report-threat", element: <ReportThreat /> },
+        { path: "news/photo-gallery", element: <PhotoGallery /> },
+        { path: "news/video-gallery", element: <VideoGallery /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useState, useRef, useEffect } from 'react';
-import logoImage from '../assets/images/logo.png';
+import logoGe from '../assets/images/logo.png';
+import logoEn from '../assets/images/logo_en.png';
 
 // Improved dropdown component with better interaction
 const NavDropdown = ({ title, items }) => {
@@ -156,7 +157,7 @@ const LanguageSelector = () => {
 
 export default function Header() {
   const { currentUser, logout, isAdmin } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
@@ -222,6 +223,9 @@ export default function Header() {
   const toggleMobileNav = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
   };
+
+  // Determine which logo to use based on language
+  const logoImage = language === 'en' ? logoEn : logoGe;
 
   return (
     <header className="bg-susi-darkgray shadow-md text-susi-white">

@@ -262,5 +262,26 @@ export default {
     nato: 'North Atlantic Treaty Organization (NATO)',
     nato_liaison: 'NATO Liaison Office (NLO) Georgia',
     osce: 'Organization for Security and Cooperation in Europe (OSCE)'
+  },
+  
+  // Landing page
+  landing: {
+    heroTitle: 'State Security Service of Georgia',
+    heroSubtitle: 'Ensuring safety and security for the citizens of Georgia through intelligence, counterterrorism, and protective services',
+    featuresTitle: 'Our Services',
+    securityTitle: 'Security Operations',
+    securityDescription: 'Protecting Georgia from threats through strategic security operations and counterterrorism activities',
+    informationTitle: 'Intelligence Analysis',
+    informationDescription: 'Gathering and analyzing information to identify and prevent potential threats to national security',
+    cooperationTitle: 'International Cooperation',
+    cooperationDescription: 'Working with international partners to address global security challenges and terrorism threats',
+    hotlineDescription: 'Report threats or suspicious activities 24/7',
+    latestNewsTitle: 'Latest News',
+    viewAllNews: 'View All News',
+    noNewsAvailable: 'No news articles available at this time',
+    quickLinksTitle: 'Quick Links',
+    missionTitle: 'Our Mission',
+    missionStatement: 'The State Security Service is dedicated to protecting Georgia\'s national interests, constitutional order, and territorial integrity. We work tirelessly to ensure the safety of our citizens through intelligence, counterterrorism operations, and security measures.',
+    learnMore: 'Learn More About Us'
   }
 };

@@ -6,6 +6,7 @@ import {
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import LandingPage from './pages/LandingPage';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import ReportThreat from './pages/ReportThreat';
@@ -46,7 +47,8 @@ const router = createBrowserRouter(
       path: "/",
       element: <Layout />,
       children: [
-        { index: true, element: <Home /> },
+        { index: true, element: <LandingPage /> },
+        { path: "home", element: <Home /> },
         { path: "post/:slug", element: <BlogPost /> },
         { path: "login", element: <Login /> },
         { path: "signup", element: <Signup /> },

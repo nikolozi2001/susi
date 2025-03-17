@@ -198,5 +198,36 @@ export default {
     emptyGallery: 'გალერეაში ჯერ არ არის ელემენტები',
     photoDetails: 'ფოტოს დეტალები',
     videoDetails: 'ვიდეოს დეტალები'
+  },
+  
+  // Contact page
+  contact: {
+    title: 'კონტაქტი',
+    contactInfo: 'საკონტაქტო ინფორმაცია',
+    contactForm: 'საკონტაქტო ფორმა',
+    address: 'მისამართი',
+    addressValue: 'საქართველო, ქ. თბილისი 0186, ვაჟა-ფშაველას გამზირი №72',
+    phone: 'ტელეფონი',
+    phoneValue: '(+995 32) 241 20 48',
+    fax: 'ფაქსი',
+    faxValue: '(+995 32) 241 20 23',
+    email: 'ელ-ფოსტა',
+    findUs: 'იხილეთ რუკაზე',
+    firstName: 'სახელი',
+    lastName: 'გვარი',
+    personalId: 'პირადი ნომერი',
+    invalidPersonalId: 'პირადი ნომერი უნდა შეიცავდეს 11 ციფრს',
+    address: 'მისამართი',
+    email: 'ელ-ფოსტა',
+    invalidEmail: 'გთხოვთ მიუთითოთ ელ-ფოსტის სწორი მისამართი',
+    subject: 'სათაური',
+    message: 'წერილი',
+    send: 'გაგზავნა',
+    sending: 'იგზავნება...',
+    required: 'სავალდებულო',
+    submitError: 'ფორმის გაგზავნისას მოხდა შეცდომა. გთხოვთ სცადოთ მოგვიანებით.',
+    thankYou: 'მადლობა',
+    submissionSuccess: 'თქვენი წერილი წარმატებით გაიგზავნა. ჩვენ დაგიკავშირდებით უახლოეს დროში.',
+    submitAnother: 'ახალი წერილის გაგზავნა'
   }
 };

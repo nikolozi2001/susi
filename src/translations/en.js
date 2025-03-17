@@ -197,5 +197,36 @@ export default {
     emptyGallery: 'No items in gallery yet',
     photoDetails: 'Photo Details',
     videoDetails: 'Video Details'
+  },
+  
+  // Contact page
+  contact: {
+    title: 'Contact Us',
+    contactInfo: 'Contact Information',
+    contactForm: 'Contact Form',
+    address: 'Address',
+    addressValue: 'Georgia, Tbilisi 0186, Vazha-Pshavela Ave. #72',
+    phone: 'Phone',
+    phoneValue: '(+995 32) 241 20 48',
+    fax: 'Fax',
+    faxValue: '(+995 32) 241 20 23',
+    email: 'Email',
+    findUs: 'Find Us on Map',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    personalId: 'Personal ID',
+    invalidPersonalId: 'Personal ID must be 11 digits',
+    address: 'Address',
+    email: 'Email',
+    invalidEmail: 'Please enter a valid email address',
+    subject: 'Subject',
+    message: 'Message',
+    send: 'Send Message',
+    sending: 'Sending...',
+    required: 'Required',
+    submitError: 'There was an error submitting the form. Please try again later.',
+    thankYou: 'Thank You',
+    submissionSuccess: 'Your message has been sent successfully. We will get back to you soon.',
+    submitAnother: 'Send Another Message'
   }
 };

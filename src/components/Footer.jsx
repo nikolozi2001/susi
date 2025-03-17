@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import logoImage from '../assets/images/logo.png';
+import logoImageGeo from '../assets/images/logo_small_bw.png';
+import logoImageEng from '../assets/images/logo_small_bw_en.png';
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const year = new Date().getFullYear();
+  
+  // Choose logo based on current language
+  const logoImage = language === 'en' ? logoImageEng : logoImageGeo;
 
   return (
     <footer className="bg-susi-darkgray text-susi-white py-8 mt-12">

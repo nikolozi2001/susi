@@ -228,5 +228,39 @@ export default {
     thankYou: 'Thank You',
     submissionSuccess: 'Your message has been sent successfully. We will get back to you soon.',
     submitAnother: 'Send Another Message'
+  },
+  
+  // Links page
+  links: {
+    title: 'Links',
+    government_section: 'Government Institutions',
+    international_section: 'International Organizations',
+    
+    // Government links
+    government: 'Government of Georgia',
+    parliament: 'Parliament of Georgia',
+    constitutional_court: 'Constitutional Court of Georgia',
+    supreme_court: 'Supreme Court of Georgia',
+    justice_ministry: 'Ministry of Justice of Georgia',
+    interior_ministry: 'Ministry of Internal Affairs of Georgia',
+    defense_ministry: 'Ministry of Defence of Georgia',
+    foreign_ministry: 'Ministry of Foreign Affairs of Georgia',
+    environment_ministry: 'Ministry of Environment Protection and Agriculture of Georgia',
+    idp_ministry: 'Ministry of Internally Displaced Persons from the Occupied Territories, Labour, Health and Social Affairs of Georgia',
+    prosecutor: 'Prosecutor\'s Office of Georgia',
+    intelligence: 'Georgian Intelligence Service',
+    abkhazia_government: 'Government of the Autonomous Republic of Abkhazia',
+    special_protection: 'Special State Protection Service of Georgia',
+    data_protection: 'Office of Personal Data Protection Inspector',
+
+    // International organizations
+    eu: 'European Union (EU)',
+    council_of_europe: 'Council of Europe',
+    un: 'United Nations (UN)',
+    eumm: 'European Union Monitoring Mission in Georgia (EUMM Georgia)',
+    codexter: 'CODEXTER (Committee of Experts on Terrorism)',
+    nato: 'North Atlantic Treaty Organization (NATO)',
+    nato_liaison: 'NATO Liaison Office (NLO) Georgia',
+    osce: 'Organization for Security and Cooperation in Europe (OSCE)'
   }
 };

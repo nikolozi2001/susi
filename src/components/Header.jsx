@@ -178,6 +178,35 @@ export default function Header() {
     { label: t('news.videoGallery'), path: "/news/video-gallery" }
   ];
 
+  const mainNavItems = [
+    { path: '/', label: t('nav.home') },
+    {
+      label: t('nav.aboutUs'),
+      submenu: [
+        { path: '/about/information', label: t('aboutUs.information') },
+        { path: '/about/head-deputies', label: t('aboutUs.headAndDeputies') },
+      ]
+    },
+    {
+      label: t('nav.information'),
+      submenu: [
+        { path: '/info/standard-acts', label: t('information.standardActs') },
+        { path: '/info/international-cooperation', label: t('information.internationalCooperation') },
+        { path: '/info/reports', label: t('information.reports') },
+      ]
+    },
+    {
+      label: t('nav.news'),
+      submenu: [
+        { path: '/news', label: t('news.allNews') },
+        { path: '/news/photo-gallery', label: t('news.photoGallery') },
+        { path: '/news/video-gallery', label: t('news.videoGallery') },
+      ]
+    },
+    { path: '/links', label: t('nav.links') },
+    { path: '/contact', label: t('nav.contactUs') },
+  ];
+
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);

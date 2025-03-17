@@ -12,6 +12,7 @@ import ReportThreat from './pages/ReportThreat';
 import PhotoGallery from './pages/news/PhotoGallery';
 import VideoGallery from './pages/news/VideoGallery';
 import Contact from './pages/Contact';
+import Links from './pages/Links';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -53,6 +54,7 @@ const router = createBrowserRouter(
         { path: "news/photo-gallery", element: <PhotoGallery /> },
         { path: "news/video-gallery", element: <VideoGallery /> },
         { path: "contact", element: <Contact /> },
+        { path: "links", element: <Links /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

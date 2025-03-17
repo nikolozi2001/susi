@@ -1,7 +1,7 @@
 import { useLanguage } from '../../contexts/LanguageContext';
 
 export default function Reports() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   // Annual reports data
   const reports = [
@@ -82,7 +82,7 @@ export default function Reports() {
               <div className="flex gap-3">
                 <button 
                   className="px-4 py-2 bg-susi-gray-700 text-white rounded hover:bg-susi-darkgray transition-colors flex items-center"
-                  onClick={() => window.open(`/reports/${report.id}.pdf`, '_blank')}
+                  onClick={() => window.open(`/reports/${report.id}_${language}.pdf`, '_blank')}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -95,8 +95,8 @@ export default function Reports() {
                   className="px-4 py-2 border border-susi-gray-300 rounded hover:bg-susi-gray-100 transition-colors flex items-center"
                   onClick={() => {
                     const link = document.createElement('a');
-                    link.href = `/reports/${report.id}.pdf`;
-                    link.download = `${t('reports.stateSecurityService')}-${report.year}.pdf`;
+                    link.href = `/reports/${report.id}_${language}.pdf`;
+                    link.download = `${t('reports.stateSecurityService')}-${report.year}_${language}.pdf`;
                     link.click();
                   }}
                 >

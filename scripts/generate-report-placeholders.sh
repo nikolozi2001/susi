@@ -16,25 +16,35 @@ YEARS=(
   "2023"
 )
 
-# Create a basic placeholder PDF for each report
+# List of languages
+LANGUAGES=("ka" "en")
+
+# Create a basic placeholder PDF for each report and language
 for year in "${YEARS[@]}"; do
-  # Skip if file already exists
-  if [ -f "public/reports/report-${year}.pdf" ]; then
-    echo "Skipping existing file: report-${year}.pdf"
-    continue
-  fi
-  
-  echo "Creating placeholder for: report-${year}.pdf"
-  
-  # Set date range
-  if [ "$year" == "2015" ]; then
-    DATE_RANGE="01.08.2015-31.12.2015"
-  else
-    DATE_RANGE="01.01.${year}-31.12.${year}"
-  fi
-  
-  # Create a minimal PDF file
-  cat > "public/reports/report-${year}.pdf" << EOF
+  for lang in "${LANGUAGES[@]}"; do
+    # Skip if file already exists
+    if [ -f "public/reports/report-${year}_${lang}.pdf" ]; then
+      echo "Skipping existing file: report-${year}_${lang}.pdf"
+      continue
+    fi
+    
+    echo "Creating placeholder for: report-${year}_${lang}.pdf"
+    
+    # Set date range
+    if [ "$year" == "2015" ]; then
+      DATE_RANGE="01.08.2015-31.12.2015"
+    else
+      DATE_RANGE="01.01.${year}-31.12.${year}"
+    fi
+    
+    # Set language text
+    LANG_TEXT="Georgian"
+    if [ "$lang" == "en" ]; then
+      LANG_TEXT="English"
+    fi
+    
+    # Create a minimal PDF file
+    cat > "public/reports/report-${year}_${lang}.pdf" << EOF
 %PDF-1.4
 1 0 obj
 << /Type /Catalog /Pages 2 0 R >>
@@ -52,7 +62,7 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
 endobj
 6 0 obj
-<< /Length 200 >>
+<< /Length 280 >>
 stream
 BT
 /F1 24 Tf
@@ -61,8 +71,10 @@ BT
 100 650 Td (Annual Report ${year}) Tj
 /F1 16 Tf
 100 600 Td (Reporting Period: ${DATE_RANGE}) Tj
+/F1 14 Tf
+100 560 Td (Language: ${LANG_TEXT}) Tj
 /F1 12 Tf
-100 550 Td (This is a placeholder PDF for the annual report.) Tj
+100 520 Td (This is a placeholder PDF for the annual report.) Tj
 ET
 endstream
 endobj
@@ -77,10 +89,11 @@ xref
 0000000320 00000 n
 trailer << /Size 7 /Root 1 0 R >>
 startxref
-570
+650
 %%EOF
 EOF
 
+  done
 done
 
-echo "Done creating placeholder PDFs in public/reports/"
+echo "Done creating language-specific placeholder PDFs in public/reports/"

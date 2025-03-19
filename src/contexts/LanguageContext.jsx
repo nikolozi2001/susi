@@ -24,19 +24,49 @@ export const LanguageProvider = ({ children }) => {
   // Get translations for current language
   const translations = languages[language] || languages[defaultLanguage];
   
-  // Function to change language
-  const changeLanguage = (lang) => {
-    if (languages[lang]) {
-      setLanguage(lang);
-      localStorage.setItem('language', lang);
-      // Set html lang attribute
-      document.documentElement.lang = lang;
+  // Helper function to update document title
+  const updateDocumentTitle = (lang) => {
+    document.title = lang === 'ka' 
+      ? 'საქართველოს სახელმწიფო უსაფრთხოების სამსახური'
+      : 'State Security Service of Georgia';
+  };
+  
+  // Helper function to update favicon
+  const updateFavicon = (lang) => {
+    const favicon = document.getElementById('favicon');
+    if (favicon) {
+      favicon.href = lang === 'ka' 
+        ? '/src/assets/images/logo.png'
+        : '/src/assets/images/logo_en.png';
     }
   };
   
-  // Set initial html lang attribute
+  // Function to change language
+  const changeLanguage = (lang) => {
+    if (languages[lang]) {
+      // Update language in state
+      setLanguage(lang);
+      
+      // Save to localStorage
+      localStorage.setItem('language', lang);
+      
+      // Set html lang attribute
+      document.documentElement.lang = lang;
+      
+      // Update document title and favicon immediately
+      updateDocumentTitle(lang);
+      updateFavicon(lang);
+      
+      // Dispatch a custom event that components can listen for
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
+    }
+  };
+  
+  // Set initial html lang attribute, title and favicon
   useEffect(() => {
     document.documentElement.lang = language;
+    updateDocumentTitle(language);
+    updateFavicon(language);
   }, [language]);
   
   // Translate function

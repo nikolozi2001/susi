@@ -10,6 +10,14 @@ export default function Footer() {
   // Choose logo based on current language
   const logoImage = language === "en" ? logoImageEng : logoImageGeo;
 
+  // Define security areas links
+  const securityLinks = [
+    { name: t('footer.fightTerrorism'), to: '/security/terrorism' },
+    { name: t('footer.occupiedTerritories'), to: '/security/occupied-territories' },
+    { name: t('footer.fightCorruption'), to: '/security/corruption' },
+    { name: t('footer.cbrnSecurity'), to: '/security/cbrn' },
+  ];
+
   return (
     <footer className="bg-susi-darkgray text-susi-white py-8 mt-12">
       <div className="container mx-auto px-4">
@@ -111,6 +119,26 @@ export default function Footer() {
                   </Link>
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Security Areas section */}
+        <div className="flex flex-wrap gap-x-4 gap-y-4 mb-8">
+          <div>
+            <h3 className="text-lg font-bold mb-3 text-susi-beige">
+              {t('footer.securityAreas')}
+            </h3>
+            <div className="flex flex-wrap gap-x-4 gap-y-4">
+              {securityLinks.map((link, linkIdx) => (
+                <Link 
+                  key={linkIdx}
+                  to={link.to} 
+                  className="text-susi-beige hover:text-white transition-colors text-sm whitespace-nowrap"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

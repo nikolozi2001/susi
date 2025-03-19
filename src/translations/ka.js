@@ -114,6 +114,12 @@ export default {
     contact: "კონტაქტი",
     privacy: "კონფიდენციალურობა",
     terms: "პირობები",
+    quickLinks: "სწრაფი ბმულები",
+    securityAreas: "უსაფრთხოების მიმართულებები",
+    fightTerrorism: "ტერორიზმთან ბრძოლა",
+    occupiedTerritories: "ოკუპირებული ტერიტორიები",
+    fightCorruption: "კორუფციის წინააღმდეგ ბრძოლა",
+    cbrnSecurity: "ქბრბ უსაფრთხოება",
   },
 
   // Error pages

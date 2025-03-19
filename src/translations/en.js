@@ -114,6 +114,12 @@ export default {
     contact: "Contact",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
+    quickLinks: "Quick Links",
+    securityAreas: "Security Areas",
+    fightTerrorism: "Fight Against Terrorism",
+    occupiedTerritories: "Occupied Territories",
+    fightCorruption: "Fight against Corruption",
+    cbrnSecurity: "CBRN Security",
   },
 
   // Error pages

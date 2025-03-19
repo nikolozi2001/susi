@@ -20,6 +20,11 @@ import InternationalCooperation from './pages/info/InternationalCooperation';
 import Reports from './pages/info/Reports';
 import Information from './pages/about/Information';
 import HeadDeputies from './pages/about/HeadDeputies';
+// Import Security pages
+import Terrorism from './pages/security/Terrorism';
+import OccupiedTerritories from './pages/security/OccupiedTerritories';
+import Corruption from './pages/security/Corruption';
+import CBRN from './pages/security/CBRN';
 
 // Auth components
 import Login from './components/auth/Login';
@@ -69,6 +74,11 @@ const router = createBrowserRouter(
         { path: "info/reports", element: <Reports /> },
         { path: "about/information", element: <Information /> },
         { path: "about/head-deputies", element: <HeadDeputies /> },
+        // Add the new route for the Terrorism page
+        { path: "security/terrorism", element: <Terrorism /> },
+        { path: "security/occupied-territories", element: <OccupiedTerritories /> },
+        { path: "security/corruption", element: <Corruption /> },
+        { path: "security/cbrn", element: <CBRN /> },
         { 
           path: "admin",
           element: <ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>

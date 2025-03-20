@@ -57,12 +57,13 @@ const getFallbackPosts = () => {
 // Test API connection
 export const testConnection = async () => {
   try {
-    // Try primary URL
-    const response = await api.get('/test');
-    return response.data;
+    const response = await api.get('/test', { timeout: 5000 });
+    return { success: true, data: response.data };
   } catch (error) {
-    console.error('API test failed:', error.message);
-    throw error;
+    console.error('Connection test failed:', error.message);
+    // Dispatch an event that the OfflineNotice component can listen for
+    window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    return { success: false, error: error.message };
   }
 };
 
@@ -106,6 +107,11 @@ export const getPosts = async (filters = {}) => {
   } catch (error) {
     console.error('Error fetching posts:', error.message);
     
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
+
     // If we're using local data and have a search filter, filter it locally
     if (filters.search) {
       return localPosts.filter(post => 
@@ -124,28 +130,68 @@ export const getPostBySlug = async (slug) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching post by slug:', error.message);
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
     return localPosts.find(p => p.slug === slug);
   }
 };
 
 export const getPostById = async (id) => {
-  const response = await api.get(`/posts/${id}`);
-  return response.data;
+  try {
+    const response = await api.get(`/posts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching post by id:', error.message);
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
+    throw error;
+  }
 };
 
 export const createPost = async (postData) => {
-  const response = await api.post('/posts', postData);
-  return response.data;
+  try {
+    const response = await api.post('/posts', postData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating post:', error.message);
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
+    throw error;
+  }
 };
 
 export const updatePost = async (id, postData) => {
-  const response = await api.put(`/posts/${id}`, postData);
-  return response.data;
+  try {
+    const response = await api.put(`/posts/${id}`, postData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating post:', error.message);
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
+    throw error;
+  }
 };
 
 export const deletePost = async (id) => {
-  const response = await api.delete(`/posts/${id}`);
-  return response.data;
+  try {
+    const response = await api.delete(`/posts/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting post:', error.message);
+    // Dispatch event for connection errors
+    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
+      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
+    }
+    throw error;
+  }
 };
 
 export default api;

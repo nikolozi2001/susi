@@ -38,6 +38,9 @@ import Dashboard from './pages/admin/Dashboard';
 import PostEditor from './pages/admin/PostEditor';
 import Unauthorized from './pages/Unauthorized';
 
+// Import OfflineNotice component
+import OfflineNotice from './components/OfflineNotice';
+
 // Layout component that includes the header and footer
 const Layout = () => {
   return (
@@ -47,6 +50,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <OfflineNotice />
     </div>
   );
 };

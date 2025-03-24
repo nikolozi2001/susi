@@ -77,7 +77,7 @@ export default function LandingPage() {
       >
         <div className="container mx-auto px-4 z-10">
           <div className="max-w-3xl text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-4">
               {t('landing.heroTitle')}
             </h1>
             <p className="text-xl mb-8 text-gray-200">

@@ -336,15 +336,36 @@ export default function Header() {
     <header className="bg-susi-darkgray shadow-md text-susi-white">
       {/* Hotline Bar */}
       <div className="bg-red-700 text-white py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 flex flex-wrap justify-between items-center gap-2">
           <div className="flex items-center">
-            <span className="font-bold mr-2">{t("hotline.title")}:</span>
-            <a href="tel:123" className="text-xl font-bold hover:underline">
-              123
+            <span className="text-sm sm:text-base font-bold mr-1 sm:mr-2">{t("hotline.title")}:</span>
+            <a 
+              href="tel:123" 
+              className="text-lg sm:text-xl font-bold hover:underline flex items-center"
+              aria-label="Call emergency hotline 123"
+            >
+              <span className="bg-red-800 bg-opacity-30 px-2 py-1 rounded">123</span>
             </a>
           </div>
-          <div className="uppercase font-bold tracking-wider">
-            <Link to="/report-threat" className="hover:underline">
+          <div className="uppercase text-xs sm:text-sm font-bold tracking-wide sm:tracking-wider">
+            <Link 
+              to="/report-threat" 
+              className="hover:underline flex items-center px-2 py-1 rounded hover:bg-red-800 hover:bg-opacity-30"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 mr-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+                />
+              </svg>
               {t("hotline.reportThreats")}
             </Link>
           </div>

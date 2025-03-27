@@ -89,38 +89,61 @@ export const getCurrentUser = async () => {
 };
 
 // Posts API functions with fallbacks
-export const getPosts = async (filters = {}) => {
+export const getPosts = async ({ published, limit, page, search, useLocal = false }) => {
   try {
+    // Build query parameters
     const params = new URLSearchParams();
+    if (published !== undefined) params.append('published', published.toString());
+    if (limit) params.append('limit', limit.toString());
+    if (page) params.append('page', page.toString());
+    if (search) params.append('search', search);
     
-    if (filters.published !== undefined) {
-      params.append('published', filters.published);
+    // Only use local storage as fallback if not explicitly disabled
+    if (!useLocal) {
+      // Use the API instance instead of axios directly
+      const response = await api.get(`/posts?${params.toString()}`);
+      console.log('API response:', response.data);
+      
+      // Check if we got a proper response with posts array
+      if (response.data && (response.data.posts || Array.isArray(response.data))) {
+        // Handle both {posts: [...]} and direct array response formats
+        return Array.isArray(response.data) ? response.data : response.data.posts;
+      }
     }
     
-    if (filters.search) {
-      params.append('search', filters.search);
-    }
+    // Fallback to local storage only if API fails or useLocal is true
+    console.log('Falling back to local data for posts');
+    const storedPosts = localStorage.getItem('posts');
+    const localPosts = storedPosts ? JSON.parse(storedPosts) : [];
     
-    console.log(`Sending request to: ${API_URL}/posts?${params}`);
-    const response = await api.get(`/posts?${params.toString()}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching posts:', error.message);
-    
-    // Dispatch event for connection errors
-    if (error.message.includes('timeout') || error.message.includes('Network Error')) {
-      window.dispatchEvent(new CustomEvent('api-error', { detail: error }));
-    }
-
-    // If we're using local data and have a search filter, filter it locally
-    if (filters.search) {
+    // Apply search filter locally
+    if (search) {
+      const searchLower = search.toLowerCase();
       return localPosts.filter(post => 
-        post.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(filters.search.toLowerCase()) ||
-        post.content.toLowerCase().includes(filters.search.toLowerCase())
+        post.title.toLowerCase().includes(searchLower) ||
+        (post.content && post.content.toLowerCase().includes(searchLower)) ||
+        (post.excerpt && post.excerpt.toLowerCase().includes(searchLower))
       );
     }
-    return getFallbackPosts();
+    
+    return localPosts;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    // Fallback to localStorage
+    const storedPosts = localStorage.getItem('posts');
+    const localPosts = storedPosts ? JSON.parse(storedPosts) : [];
+    
+    // Apply search filter locally
+    if (search) {
+      const searchLower = search.toLowerCase();
+      return localPosts.filter(post => 
+        post.title.toLowerCase().includes(searchLower) ||
+        (post.content && post.content.toLowerCase().includes(searchLower)) ||
+        (post.excerpt && post.excerpt.toLowerCase().includes(searchLower))
+      );
+    }
+    
+    return localPosts;
   }
 };
 

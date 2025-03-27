@@ -1,4 +1,4 @@
-import Post from '../models/Post.js';
+import Post from '../models/postModel.js';
 
 // Sample data for when the database is empty
 const samplePosts = [
@@ -50,40 +50,54 @@ const samplePosts = [
 // @access  Public
 export const getPosts = async (req, res) => {
   try {
-    const { published, search } = req.query;
+    const { published, limit, page, search } = req.query;
     
-    // Build query
-    let query = {};
+    // Build the MongoDB query object
+    const query = {};
     
-    // Filter by published status
-    if (published) {
+    // Add filters
+    if (published !== undefined) {
       query.published = published === 'true';
     }
     
-    // Search functionality
+    // Add search functionality
     if (search) {
-      query.$text = { $search: search };
+      // Use MongoDB text search if you have text index set up
+      // Or use regex for simple search across multiple fields
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+        { excerpt: { $regex: search, $options: 'i' } }
+      ];
     }
-
-    // Execute query
-    let posts = await Post.find(query)
-      .populate('author', 'name')
-      .sort({ createdAt: -1 });
     
-    // If no posts found, check if collection is empty
-    if (posts.length === 0) {
-      const count = await Post.countDocuments();
-      if (count === 0) {
-        // Return sample data if database is empty
-        console.log('No posts found in database. Returning sample data.');
-        return res.json(samplePosts);
+    // Pagination
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 10;
+    const skip = (pageNumber - 1) * pageSize;
+    
+    // Execute query with pagination
+    const posts = await Post.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(pageSize)
+      .populate('author', 'name');
+      
+    // Get total count for pagination info
+    const total = await Post.countDocuments(query);
+    
+    res.json({
+      posts,
+      pagination: {
+        total,
+        page: pageNumber,
+        pages: Math.ceil(total / pageSize)
       }
-    }
+    });
     
-    res.json(posts);
   } catch (error) {
-    console.error('Error in getPosts:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ message: 'Error fetching posts', error: error.message });
   }
 };
 

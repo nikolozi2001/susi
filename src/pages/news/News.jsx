@@ -29,10 +29,11 @@ export default function News() {
         setLoading(true);
         console.log('Fetching news with searchTerm:', debouncedSearchTerm);
         
-        // Get posts - the API function already handles fallback to local data
+        // Make sure we're sending search param correctly to API
         const fetchedPosts = await getPosts({ 
           published: true,
-          search: debouncedSearchTerm || undefined 
+          search: debouncedSearchTerm || undefined,
+          useLocal: false // Force using MongoDB instead of local storage
         });
         
         // Format posts for display
@@ -47,7 +48,8 @@ export default function News() {
         }));
         
         setPosts(formattedPosts);
-        setUsingLocal(Array.isArray(fetchedPosts) && fetchedPosts.length > 0 && !fetchedPosts[0]._id);
+        // Check directly for API vs localStorage response
+        setUsingLocal(!fetchedPosts[0]?._id);
         
       } catch (err) {
         console.error('Error in component when fetching news:', err);
